@@ -1,0 +1,18 @@
+{
+  "name": "project-template",
+  "version": "0.0.1",
+  "authors": [
+    "ckross01 <christopher.k.ross@gmail.com>"
+  ],
+  "description": "basic project structure for full stack js project",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ]
+}
