@@ -1,23 +1,31 @@
 var gulp = require('gulp'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
-    rename = require('gulp-rename');
+    rename = require('gulp-rename'),
+    merge = require('merge-stream');
 
 gulp.task('lint', function() {
-    return gulp.src('src/*.js')
+    var publicApp = gulp.src('public/app/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter('default'));
+
+    var serverApp = gulp.src('server/app/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+
+    return merge(publicApp, serverApp);
 });
 
 gulp.task('scripts', function() {
-    return gulp.src('src/*.js')
-        .pipe(rename('simplecookie.min.js'))
+    return gulp.src('public/app/*.js')
+        .pipe(rename('*.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('dist'));
 });
 
 gulp.task('watch', function() {
-    gulp.watch('src/*.js', ['lint', 'scripts']);
+    gulp.watch('public/app/*.js', ['lint', 'scripts']);
+    gulp.watch('server/*js', ['lint']);
 });
 
 gulp.task('default', ['lint', 'scripts', 'watch']);
